@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevPrep — Interview Preparation Platform
 
-## Getting Started
+DevPrep is a sleek, minimalist, and highly responsive web application tailored for software engineers preparing for technical interviews. Built using **Next.js (App Router)** and **Tailwind CSS**, it features a modern, high-contrast, black-and-white neo-brutalist UI.
 
-First, run the development server:
+This platform serves as a centralized hub to revise core concepts in Backend Development, Frontend Frameworks, Systems Architecture, and DevOps.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ** Specialized Framework Tracking:** Dedicated sections for Laravel/PHP, React/Next.js, Databases (MySQL/PostgreSQL), and DevOps (Docker, CI/CD).
+- ** Neo-Brutalist Design:** Minimalist black-and-white aesthetic, avoiding unnecessary bloat to keep the focus purely on content.
+- ** Fully Responsive:** Optimized seamlessly for desktops, tablets, and mobile devices.
+- ** Modern Tech Stack:** Built using Next.js App Router for optimal routing and performance.
+- ** Static Pagination:** Pre-configured pagination design ready for dynamic data integration.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+##  Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS
+- **Icons & Fonts:** Next.js Google Fonts (Inter)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+##  Directory Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/
+├── app/
+│   ├── categories/
+│   │   ├── backend/
+│   │   │   └── page.js      # Single category view with posts & pagination
+│   │   └── page.js          # Categories list directory
+│   ├── login/
+│   │   └── page.js          # Minimalist login layout
+│   ├── globals.css          # Tailwind setup
+│   ├── layout.js            # Global Layout (Navbar & Footer)
+│   └── page.js              # Hero / Home page
