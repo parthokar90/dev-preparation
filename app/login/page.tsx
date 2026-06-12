@@ -32,7 +32,7 @@ export default function LoginPage() {
             const res = await login(form);
 
             if (res?.success) {
-                router.push("/");
+                router.push("/dashboard");
             }
         } catch (err: any) {
             const status = err?.response?.status;
