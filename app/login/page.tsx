@@ -15,7 +15,7 @@ export default function Login() {
                         <input type="password" required className="w-full border-2 border-black p-3 text-sm focus:outline-none focus:bg-neutral-50" placeholder="••••••••" />
                     </div>
                     <button type="submit" className="w-full bg-black text-white p-3 font-bold text-sm tracking-wide hover:bg-neutral-800 transition uppercase mt-2">
-                        Sign In
+                        Log In
                     </button>
                 </form>
             </div>
