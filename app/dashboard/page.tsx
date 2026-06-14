@@ -343,6 +343,7 @@ export default function Dashboard() {
                                     Description
                                 </label>
                                 <ReactQuill
+                                    key={editingTopic ? `edit-${editingTopic.id}` : "new"}
                                     theme="snow"
                                     value={newTopic.description}
                                     onChange={(value) => setNewTopic({ ...newTopic, description: value })}
