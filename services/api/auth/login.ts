@@ -1,4 +1,4 @@
-import api from "../client";
+import api, { initCsrf } from "../client";
 
 export interface LoginPayload {
     email: string;
@@ -6,6 +6,7 @@ export interface LoginPayload {
 }
 
 export const login = async (data: LoginPayload) => {
+    await initCsrf(); 
     const response = await api.post("/login", data);
     return response.data;
 };
