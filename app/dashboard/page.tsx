@@ -342,12 +342,12 @@ export default function Dashboard() {
                                 <label className="block text-xs font-black uppercase mb-1.5 tracking-wider">
                                     Description
                                 </label>
-                                <textarea
-                                    rows={4}
-                                    placeholder="Optional description note..."
+                                <ReactQuill
+                                    theme="snow"
                                     value={newTopic.description}
-                                    onChange={(e) => setNewTopic({ ...newTopic, description: e.target.value })}
-                                    className="w-full border-2 border-black p-3 text-xs outline-none bg-white font-medium focus:bg-neutral-100 resize-y min-h-[100px]"
+                                    onChange={(value) => setNewTopic({ ...newTopic, description: value })}
+                                    modules={quillModules}
+                                    placeholder="Write detailed topic content here..."
                                 />
                             </div>
 
