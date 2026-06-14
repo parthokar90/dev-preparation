@@ -3,6 +3,21 @@
 import { useEffect, useState } from "react";
 import { getCategories, createCategory, updateCategory, deleteCategory, Category } from "@/services/api/category/crud";
 import { getTopics, createTopic, updateTopic, deleteTopic, Topic } from "@/services/api/topic/crud";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+import "react-quill-new/dist/quill.snow.css";
+
+const quillModules = {
+    toolbar: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["blockquote", "code-block"],
+        ["link"],
+        ["clean"],
+    ],
+};
 
 export default function Dashboard() {
     const [activeMenu, setActiveMenu] = useState<"categories" | "topics">("categories");
