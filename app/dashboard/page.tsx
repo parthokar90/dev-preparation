@@ -150,10 +150,12 @@ export default function Dashboard() {
     const handleEditTopic = (topic: Topic) => {
         setEditingTopic(topic);
         setNewTopic({
-            category_id: String(topic.category_id),
-            title: topic.title,
-            description: topic.description || "",
+            category_id: String(topic.category_id ?? ""),
+            title: topic.title ?? "",
+            description: topic.description ?? "",
         });
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const handleCancelEditTopic = () => {
