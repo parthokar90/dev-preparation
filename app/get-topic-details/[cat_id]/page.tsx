@@ -85,7 +85,10 @@ export default function CategoryTopicDetails() {
                             {index + 1}. {topic.title}
                         </h3>
                         <div className="text-neutral-700 leading-relaxed space-y-3">
-                            <p>{topic.description || "No description provided."}</p>
+                            <div
+                                className="prose prose-neutral max-w-none [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-6 [&_ol]:pl-6 [&_li]:mb-1"
+                                dangerouslySetInnerHTML={{ __html: topic.description || "No description provided." }}
+                            />
                         </div>
                     </article>
                 ))}

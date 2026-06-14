@@ -107,7 +107,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             {isLoggedIn && (
               <Link
                 href="/dashboard"
-                className="hover:underline text-neutral-900 border-2 border-black bg-yellow-300 px-2.5 py-1.5 text-xs shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform active:translate-x-0.5 active:translate-y-0.5"
+                className="hover:text-blue-600 transition"
               >
                 Dashboard
               </Link>
@@ -122,7 +122,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 isLoggedIn ? (
                   <button
                     onClick={handleLogout}
-                    className="bg-red-500 text-white px-4 sm:px-5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-red-600 transition duration-100"
+                    className="hover:text-blue-600 transition"
                   >
                     Logout
                   </button>
@@ -156,7 +156,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Link href="/" onClick={() => setMenuOpen(false)} className="py-2 border-b border-neutral-200">Home</Link>
             <Link href="/categories" onClick={() => setMenuOpen(false)} className="py-2 border-b border-neutral-200">Categories</Link>
             {isLoggedIn && (
-              <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="py-2 border-b border-neutral-200 text-blue-600">Dashboard</Link>
+              <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="py-2 border-b border-neutral-200">Dashboard</Link>
             )}
 
             <div className="flex items-center gap-4 pt-2 text-base">
