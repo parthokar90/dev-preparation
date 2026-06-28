@@ -1,53 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { login } from "@/services/api/auth/login";
+import React, { useActionState } from "react";
+import Link from "next/link";
+import { loginUser } from "@/app/actions/auth/login";
 
 export default function LoginPage() {
-    const router = useRouter();
 
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
-    });
-
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        try {
-            setLoading(true);
-            setError("");
-
-            const res = await login(form);
-
-            if (res?.success) {
-                router.push("/dashboard");
-            }
-        } catch (err: any) {
-            const status = err?.response?.status;
-
-            if (status === 401) {
-                setError("Invalid email or password");
-            } else if (status === 422) {
-                setError("Validation error");
-            } else {
-                setError("Something went wrong");
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [state, formAction, isPending] = useActionState(loginUser, null);
 
     return (
         <main className="flex items-center justify-center min-h-screen">
@@ -58,11 +17,19 @@ export default function LoginPage() {
                     Log in to track your interview prep progress.
                 </p>
 
-                {error && (
-                    <p className="text-red-600 text-sm mb-3">{error}</p>
+                {/* Render global error or success alerts */}
+                {state && !state.success && (
+                    <div className="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-100">
+                        {state.message}
+                    </div>
+                )}
+                {state && state.success && (
+                    <div className="p-3 text-sm text-green-600 bg-green-50 rounded-lg border border-green-100">
+                        {state.message}
+                    </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form action={formAction} className="space-y-4">
 
                     <div>
                         <label className="block text-xs font-bold uppercase mb-1">
@@ -71,12 +38,15 @@ export default function LoginPage() {
                         <input
                             type="email"
                             name="email"
-                            value={form.email}
-                            onChange={handleChange}
                             required
+                            defaultValue={state?.inputs?.email || ""}
                             className="w-full border-2 border-black p-3 text-sm"
                             placeholder="you@example.com"
                         />
+                        {/* Specific backend validation error for first_name */}
+                        {state?.errors?.email && (
+                            <p className="text-xs text-red-500 mt-1">{state.errors.email[0]}</p>
+                        )}
                     </div>
 
                     <div>
@@ -86,20 +56,23 @@ export default function LoginPage() {
                         <input
                             type="password"
                             name="password"
-                            value={form.password}
-                            onChange={handleChange}
                             required
+                            defaultValue={state?.inputs?.password || ""}
                             className="w-full border-2 border-black p-3 text-sm"
                             placeholder="••••••••"
                         />
+                        {/* Specific backend validation error for first_name */}
+                        {state?.errors?.password && (
+                            <p className="text-xs text-red-500 mt-1">{state.errors.password[0]}</p>
+                        )}
                     </div>
 
                     <button
                         type="submit"
-                        disabled={loading}
-                        className="w-full bg-black text-white p-3 font-bold text-sm uppercase"
+                        disabled={isPending}
+                        className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold text-sm rounded-lg border-none transition-colors cursor-pointer shadow-sm mt-2"
                     >
-                        {loading ? "Logging in..." : "Log In"}
+                        {isPending ? "Processing..." : "Log In"}
                     </button>
 
                 </form>

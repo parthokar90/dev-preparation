@@ -1,11 +1,28 @@
-import api from "../client";
+"use server"; 
+
+import { cookies } from "next/headers";
+import axios from "axios";
+
+const LARAVEL_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+
+async function getAuthClient() {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+
+    return axios.create({
+        baseURL: LARAVEL_API_URL,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+        },
+    });
+}
 
 export interface Category {
     id: number;
     name: string;
     description?: string;
-    created_at?: string;
-    updated_at?: string;
 }
 
 export interface CategoryPayload {
@@ -14,25 +31,30 @@ export interface CategoryPayload {
 }
 
 export const getCategories = async (): Promise<Category[]> => {
-    const response = await api.get("category-index"); 
+    const client = await getAuthClient();
+    const response = await client.get("/category-index"); 
     return response.data; 
 };
 
 export const getCategoryById = async (id: number | string): Promise<Category> => {
-    const response = await api.get(`categories/${id}`);
+    const client = await getAuthClient();
+    const response = await client.get(`/categories/${id}`);
     return response.data;
 };
 
 export const createCategory = async (data: CategoryPayload): Promise<Category> => {
-    const response = await api.post("categories", data);
+    const client = await getAuthClient();
+    const response = await client.post("/categories", data);
     return response.data;
 };
 
 export const updateCategory = async (id: number | string, data: CategoryPayload): Promise<Category> => {
-    const response = await api.put(`/categories/${id}`, data);
+    const client = await getAuthClient();
+    const response = await client.put(`/categories/${id}`, data);
     return response.data;
 };
 
 export const deleteCategory = async (id: number | string): Promise<void> => {
-    await api.delete(`/categories/${id}`);
+    const client = await getAuthClient();
+    await client.delete(`/categories/${id}`);
 };
