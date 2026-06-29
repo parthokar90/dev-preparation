@@ -50,100 +50,98 @@ export default function CategoryTopicDetails() {
     }, [catId]);
 
     return (
-        // চোখের শান্তির জন্য সফট নিউট্রাল/গ্রে ব্যাকগ্রাউন্ড ব্যবহার করা হয়েছে
-        <main className="min-h-screen bg-neutral-50/50 text-neutral-900 py-12 px-4 sm:px-6">
-            <div className="container mx-auto max-w-4xl">
-                
-                {/* BACK BUTTON */}
-                <div className="mb-8">
-                    <Link 
-                        href="/categories" 
-                        className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-neutral-500 hover:text-blue-600 font-bold transition-colors"
-                    >
-                        <i className="fas fa-arrow-left text-[10px]"></i> Back to Categories
-                    </Link>
-                </div>
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
 
-                {/* HEADER SECTION */}
-                <div className="mb-12 border-b-2 border-neutral-200 pb-8">
-                    {loading ? (
-                        <div className="space-y-3 animate-pulse">
-                            <div className="h-10 bg-neutral-200 w-2/3 rounded"></div>
-                            <div className="h-5 bg-neutral-200 w-full rounded"></div>
+            {/* Elegant Back Button */}
+            <div className="mb-8">
+                <Link
+                    href="/categories"
+                    className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-indigo-600 transition-colors"
+                >
+                    <i className="fas fa-arrow-left text-[10px]"></i> Back to Categories
+                </Link>
+            </div>
+
+            {/* Header Section - Modern & Clean */}
+            <div className="mb-10 pb-6 border-b border-slate-200">
+                {loading ? (
+                    <div className="space-y-2 animate-pulse">
+                        <div className="h-8 bg-slate-200 w-1/2 rounded-md"></div>
+                        <div className="h-4 bg-slate-200 w-1/3 rounded-md"></div>
+                    </div>
+                ) : (
+                    <>
+                        <h2 className="text-2xl font-black text-slate-900 tracking-tight sm:text-3xl uppercase">
+                            {category ? category.name : "Category Details"}
+                        </h2>
+                        <p className="text-sm text-slate-500 mt-1">
+                            {topics.length} {topics.length === 1 ? 'topic' : 'topics'} available for preparation
+                        </p>
+                    </>
+                )}
+            </div>
+
+            {/* Error Alert - Clean Callout */}
+            {error && (
+                <div className="p-4 mb-8 border border-red-200 bg-red-50/50 text-red-700 text-sm font-medium rounded-lg flex items-center gap-2">
+                    <i className="fas fa-circle-exclamation"></i>
+                    <span>{error}</span>
+                </div>
+            )}
+
+            {/* Empty State */}
+            {!loading && topics.length === 0 && !error && (
+                <div className="text-center py-16 border border-dashed border-slate-200 rounded-xl bg-white">
+                    <i className="fas fa-folder-open text-slate-300 text-3xl mb-3 block"></i>
+                    <p className="text-sm text-slate-500 font-medium">No preparation topics found for this category yet.</p>
+                </div>
+            )}
+
+            {/* Topics List - Clean Stack Layout */}
+            <div className="space-y-6">
+                {loading ? (
+                    [1, 2, 3].map((n) => (
+                        <div key={n} className="p-6 bg-white border border-slate-200 rounded-xl space-y-3 animate-pulse">
+                            <div className="h-6 bg-slate-200 w-1/3 rounded-md"></div>
+                            <div className="h-4 bg-slate-200 w-full rounded-md"></div>
+                            <div className="h-4 bg-slate-200 w-4/5 rounded-md"></div>
                         </div>
-                    ) : (
-                        <>
-                            <div className="inline-block bg-blue-50 text-blue-700 text-[10px] font-mono font-bold uppercase tracking-widest px-2.5 py-1 mb-3 rounded border border-blue-200">
-                                Interview Topics
+                    ))
+                ) : (
+                    topics.map((topic, index) => (
+                        <article
+                            key={topic.id}
+                            className="group relative bg-white border border-slate-200 hover:border-slate-400 p-6 sm:p-8 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:shadow-sm transition-all duration-200"
+                        >
+                            {/* Left Border Accent on Hover */}
+                            <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform origin-top rounded-l" />
+
+                            <div className="flex items-start gap-4 mb-4">
+                                {/* Number Tag */}
+                                <span className="flex-shrink-0 w-7 h-7 rounded-md bg-slate-50 text-slate-500 font-mono font-bold text-xs flex items-center justify-center border border-slate-100">
+                                    {String(index + 1).padStart(2, '0')}
+                                </span>
+
+                                {/* Topic Title */}
+                                <h3 className="text-lg font-bold tracking-tight text-slate-900 pt-0.5 group-hover:text-indigo-600 transition-colors">
+                                    {topic.title}
+                                </h3>
                             </div>
-                            <h2 className="text-3xl sm:text-4xl font-black tracking-tight uppercase text-neutral-900">
-                                {category ? category.name : "Category"}
-                            </h2>
-                            <p className="text-neutral-600 mt-3 text-base sm:text-lg leading-relaxed max-w-3xl">
-                                {category?.description || "Essential interview preparation questions for this category."}
-                            </p>
-                        </>
-                    )}
-                </div>
 
-                {/* ERROR ALERT */}
-                {error && (
-                    <div className="p-4 mb-8 border-l-4 border-red-600 bg-red-50 text-red-700 font-medium rounded-r shadow-sm text-sm flex items-center gap-3">
-                        <i className="fas fa-exclamation-circle text-red-500 text-base"></i>
-                        <span>{error}</span>
-                    </div>
-                )}
-
-                {/* EMPTY STATE */}
-                {!loading && topics.length === 0 && !error && (
-                    <div className="text-center py-16 border-2 border-dashed border-neutral-300 rounded-xl bg-white shadow-sm">
-                        <i className="fas fa-folder-open text-neutral-300 text-4xl mb-3 block"></i>
-                        <p className="text-neutral-500 font-medium">No preparation topics found for this category yet.</p>
-                    </div>
-                )}
-
-                {/* TOPICS LIST */}
-                <div className="space-y-6">
-                    {loading ? (
-                        // সুন্দর কঙ্কাল স্কেলিটন লোডার (Skeleton Loader)
-                        [1, 2, 3].map((n) => (
-                            <div key={n} className="p-6 bg-white border border-neutral-200 rounded-xl space-y-3 animate-pulse">
-                                <div className="h-6 bg-neutral-200 w-1/3 rounded"></div>
-                                <div className="h-4 bg-neutral-200 w-full rounded"></div>
-                                <div className="h-4 bg-neutral-200 w-4/5 rounded"></div>
+                            {/* Description Area with beautifully stylized Rich Text */}
+                            <div className="pl-0 sm:pl-11">
+                                <div
+                                    className="prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm sm:text-[15px]
+                                    [&_p]:mb-3 [&_p:last-child]:mb-0
+                                    [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1.5
+                                    [&_strong]:text-slate-900 [&_strong]:font-semibold
+                                    [&_code]:bg-slate-50 [&_code]:text-indigo-600 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono [&_code]:border [&_code]:border-slate-200/60"
+                                    dangerouslySetInnerHTML={{ __html: topic.description || "No content provided for this topic." }}
+                                />
                             </div>
-                        ))
-                    ) : (
-                        topics.map((topic, index) => (
-                            <article 
-                                key={topic.id} 
-                                className="group relative bg-white border border-neutral-200 hover:border-blue-500/50 p-6 sm:p-8 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300"
-                            >
-                                {/* ক্লিয়ার অ্যান্ড ক্লিন টাইটেল উইথ কাউন্টার ইনডেক্স */}
-                                <div className="flex items-start gap-4 mb-4">
-                                    <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-neutral-100 group-hover:bg-blue-50 text-neutral-700 group-hover:text-blue-600 font-mono font-bold text-sm flex items-center justify-center border border-neutral-200/60 transition-colors">
-                                        {String(index + 1).padStart(2, '0')}
-                                    </span>
-                                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 pt-0.5 group-hover:text-blue-900 transition-colors">
-                                        {topic.title}
-                                    </h3>
-                                </div>
-                                
-                                {/* রিডিবিলিটি ফোকাসড ডেসক্রিপশন এরিয়া */}
-                                <div className="text-neutral-700 pl-0 sm:pl-12">
-                                    <div
-                                        className="prose prose-neutral max-w-none text-neutral-600 leading-relaxed text-sm sm:text-base
-                                        [&_p]:mb-4 [&_p:last-child]:mb-0
-                                        [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-2
-                                        [&_strong]:text-neutral-900 [&_strong]:font-bold
-                                        [&_code]:bg-neutral-100 [&_code]:text-red-600 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono"
-                                        dangerouslySetInnerHTML={{ __html: topic.description || "No content provided for this topic." }}
-                                    />
-                                </div>
-                            </article>
-                        ))
-                    )}
-                </div>
+                        </article>
+                    ))
+                )}
             </div>
         </main>
     );
