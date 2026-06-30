@@ -14,18 +14,9 @@ export default function MobileMenu({ isLoggedIn, checking, setMenuOpen, handleLo
         <div className="md:hidden border-b border-slate-900 bg-white px-5 py-6 flex flex-col gap-4 font-medium text-sm text-slate-600 sticky top-[65px] z-40 shadow-sm animate-in fade-in duration-150">
             {/* Navigation Links */}
             <Link href="/" onClick={() => setMenuOpen(false)} className="py-2 hover:text-slate-900 transition-colors">Home</Link>
-            <Link href="/categories" onClick={() => setMenuOpen(false)} className="py-2 hover:text-slate-900 transition-colors">Categories</Link>
             {!checking && isLoggedIn && (
                 <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="py-2 text-indigo-600">Dashboard</Link>
             )}
-
-            {/* Social Links */}
-            <div className="flex items-center gap-5 pt-2 text-base text-slate-400">
-                <Link href="mailto:parthokar90@gmail.com" className="hover:text-slate-900 transition-colors"><i className="fas fa-envelope"></i></Link>
-                <Link href="tel:+8801765456090" className="hover:text-slate-900 transition-colors"><i className="fas fa-phone"></i></Link>
-                <Link href="https://www.linkedin.com/in/partho-kar/" target="_blank" className="hover:text-slate-900 transition-colors"><i className="fab fa-linkedin"></i></Link>
-                <Link href="https://github.com/parthokar90" target="_blank" className="hover:text-slate-900 transition-colors"><i className="fab fa-github"></i></Link>
-            </div>
 
             {/* Auth Action Footer */}
             <div className="pt-2">

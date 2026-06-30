@@ -45,45 +45,44 @@ export default function CategoryTopicDetails() {
                 setLoading(false);
             }
         };
-
         fetchData();
     }, [catId]);
 
     return (
         <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
 
-            {/* Elegant Back Button */}
-            <div className="mb-8">
+            {/* Minimal Back Button */}
+            <div className="mb-6">
                 <Link
                     href="/categories"
-                    className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-indigo-600 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-indigo-600 transition-colors"
                 >
-                    <i className="fas fa-arrow-left text-[10px]"></i> Back to Categories
+                    <i className="fas fa-chevron-left text-[9px]"></i> Back to tracks
                 </Link>
             </div>
 
-            {/* Header Section - Modern & Clean */}
-            <div className="mb-10 pb-6 border-b border-slate-200">
+            {/* Header Section - Informative & Quiet */}
+            <div className="mb-12 pb-6 border-b border-slate-200">
                 {loading ? (
                     <div className="space-y-2 animate-pulse">
-                        <div className="h-8 bg-slate-200 w-1/2 rounded-md"></div>
-                        <div className="h-4 bg-slate-200 w-1/3 rounded-md"></div>
+                        <div className="h-7 bg-slate-200 w-1/3 rounded-lg"></div>
+                        <div className="h-4 bg-slate-200 w-1/4 rounded-lg"></div>
                     </div>
                 ) : (
                     <>
-                        <h2 className="text-2xl font-black text-slate-900 tracking-tight sm:text-3xl uppercase">
+                        <h2 className="text-xl font-black text-slate-900 tracking-tight sm:text-2xl uppercase">
                             {category ? category.name : "Category Details"}
                         </h2>
-                        <p className="text-sm text-slate-500 mt-1">
-                            {topics.length} {topics.length === 1 ? 'topic' : 'topics'} available for preparation
+                        <p className="text-xs font-semibold text-indigo-600 bg-indigo-50 inline-block px-2.5 py-1 rounded-md mt-2">
+                            {topics.length} Syllabus {topics.length === 1 ? 'Topic' : 'Topics'}
                         </p>
                     </>
                 )}
             </div>
 
-            {/* Error Alert - Clean Callout */}
+            {/* Error Alert */}
             {error && (
-                <div className="p-4 mb-8 border border-red-200 bg-red-50/50 text-red-700 text-sm font-medium rounded-lg flex items-center gap-2">
+                <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl flex items-center gap-2">
                     <i className="fas fa-circle-exclamation"></i>
                     <span>{error}</span>
                 </div>
@@ -97,48 +96,46 @@ export default function CategoryTopicDetails() {
                 </div>
             )}
 
-            {/* Topics List - Clean Stack Layout */}
-            <div className="space-y-6">
+            {/* Topics Study List */}
+            <div className="space-y-10">
                 {loading ? (
-                    [1, 2, 3].map((n) => (
+                    [1, 2].map((n) => (
                         <div key={n} className="p-6 bg-white border border-slate-200 rounded-xl space-y-3 animate-pulse">
-                            <div className="h-6 bg-slate-200 w-1/3 rounded-md"></div>
+                            <div className="h-5 bg-slate-200 w-1/4 rounded-md"></div>
                             <div className="h-4 bg-slate-200 w-full rounded-md"></div>
-                            <div className="h-4 bg-slate-200 w-4/5 rounded-md"></div>
                         </div>
                     ))
                 ) : (
                     topics.map((topic, index) => (
                         <article
                             key={topic.id}
-                            className="group relative bg-white border border-slate-200 hover:border-slate-400 p-6 sm:p-8 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:shadow-sm transition-all duration-200"
+                            className="bg-white border border-slate-200 p-6 sm:p-8 rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.01)]"
                         >
-                            {/* Left Border Accent on Hover */}
-                            <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-indigo-600 scale-y-0 group-hover:scale-y-100 transition-transform origin-top rounded-l" />
-
-                            <div className="flex items-start gap-4 mb-4">
-                                {/* Number Tag */}
-                                <span className="flex-shrink-0 w-7 h-7 rounded-md bg-slate-50 text-slate-500 font-mono font-bold text-xs flex items-center justify-center border border-slate-100">
-                                    {String(index + 1).padStart(2, '0')}
+                            {/* Topic Title with Badge-Style Numbering */}
+                            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                                <span className="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded">
+                                    TOPIC {String(index + 1).padStart(2, '0')}
                                 </span>
-
-                                {/* Topic Title */}
-                                <h3 className="text-lg font-bold tracking-tight text-slate-900 pt-0.5 group-hover:text-indigo-600 transition-colors">
+                                <h3 className="text-md font-bold text-slate-900 tracking-tight">
                                     {topic.title}
                                 </h3>
                             </div>
 
-                            {/* Description Area with beautifully stylized Rich Text */}
-                            <div className="pl-0 sm:pl-11">
-                                <div
-                                    className="prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm sm:text-[15px]
-                                    [&_p]:mb-3 [&_p:last-child]:mb-0
-                                    [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1.5
-                                    [&_strong]:text-slate-900 [&_strong]:font-semibold
-                                    [&_code]:bg-slate-50 [&_code]:text-indigo-600 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono [&_code]:border [&_code]:border-slate-200/60"
-                                    dangerouslySetInnerHTML={{ __html: topic.description || "No content provided for this topic." }}
-                                />
-                            </div>
+                            {/* Enhanced Study Content Area (Optimized for rich text, codes, lists) */}
+                            <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed text-[15px]
+                                [&_p]:mb-4 [&_p:last-child]:mb-0
+                                [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-2
+                                [&_strong]:text-slate-900 [&_strong]:font-bold
+                                
+                                /* Inline Code Styling */
+                                [&_code]:bg-slate-50 [&_code]:text-indigo-600 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs [&_code]:font-mono [&_code]:border [&_code]:border-slate-200/60
+                                
+                                /* Multiline Code Blocks / Pre tags */
+                                [&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:overflow-x-auto [&_pre]:my-5 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-6
+                                [&_pre_code]:bg-transparent [&_pre_code]:text-inherit [&_pre_code]:p-0 [&_pre_code]:border-none [&_pre_code]:text-xs"
+
+                                dangerouslySetInnerHTML={{ __html: topic.description || "No content provided for this topic." }}
+                            />
                         </article>
                     ))
                 )}
